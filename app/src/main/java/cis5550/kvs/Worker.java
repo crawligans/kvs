@@ -1,14 +1,18 @@
 package cis5550.kvs;
 
 import cis5550.webserver.Server;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Worker extends cis5550.generic.Worker {
 
-    private static ConcurrentHashMap< String, Table > tables = new ConcurrentHashMap< String , Table >();
+    private static final ConcurrentHashMap< String, Table > tables = new ConcurrentHashMap< String , Table >();
     private static String filePath = null;
     public static void main(String[] args) {
         if(args.length != 3){
@@ -30,6 +34,43 @@ public class Worker extends cis5550.generic.Worker {
         addPutTable();
         addPutRename();
         addGetCount();
+        addDrop();
+    }
+
+    private static void addDrop() {
+        Server.put("/drop/:T", (req, res) -> {
+            String tableID = req.params("T");
+            if (tableID == null) {
+                res.status(400, "Bad Request");
+                return "FAIL";
+            }
+            if (!tables.containsKey(tableID)) {
+                res.status(404, "Not Found");
+                return "Table Not Found";
+            }
+            res.type("text/plain");
+            Table table = tables.get(tableID);
+            if (table instanceof PersistentTable && !"true".equalsIgnoreCase(
+                req.queryParams("isPersist"))) {
+                res.status(304, "Not Modified");
+                return "Use \"isPersist=true\" in query param to confirm delete an persistent table";
+            }
+            tables.remove(tableID).getTable().forEach((key, value) -> {
+                try {
+                    res.write(key.getBytes());
+                    res.write("\t".getBytes());
+                    res.write(value.toByteArray());
+                    res.write("\r\n".getBytes());
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+            });
+            res.write("\r\n".getBytes());
+            if (table instanceof PersistentTable) {
+                ((PersistentTable) table).drop();
+            }
+            return table.size();
+        });
     }
 
     private static void addGetCount() {
