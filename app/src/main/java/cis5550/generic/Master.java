@@ -3,14 +3,22 @@ package cis5550.generic;
 import cis5550.webserver.Server;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class Master {
     private static ConcurrentHashMap<String, Pair<String, String> > activeWorkers = new ConcurrentHashMap<>();
 
-    public static List<String> getWorkers(){
-        return new ArrayList<>();
+    public static Vector<String> getWorkers(){
+        Vector<String> workers = new Vector();
+        Iterator it = activeWorkers.keySet().iterator();
+        while(it.hasNext()) {
+            Pair<String, String > p = activeWorkers.get(it.next());
+            workers.add(p.toString());
+        }
+        return workers;
     }
     public static String workerTable(){
         String s = "<table>\n" +

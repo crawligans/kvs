@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e92ce3b5-7378-4247-a7b4-ecbd0e64223e" name="Changes" comment="Automation Setup (#2)">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/cis5550/kvs/KVSClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/cis5550/kvs/KVSClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/cis5550/generic/Master.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/cis5550/generic/Master.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/cis5550/generic/Pair.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/cis5550/generic/Pair.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

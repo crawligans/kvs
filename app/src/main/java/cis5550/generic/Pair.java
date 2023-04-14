@@ -19,5 +19,9 @@ public class Pair<T, T1> {
     long getTimeCreated(){
         return timeCreated;
     }
+    @Override
+    public String toString(){
+        return this.key.toString() + ":" + this.value.toString();
+    }
 }
 
