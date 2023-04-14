@@ -5,28 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e92ce3b5-7378-4247-a7b4-ecbd0e64223e" name="Changes" comment="Automation Setup (#2)">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/cis5550/generic/Master.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/cis5550/generic/Pair.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/cis5550/generic/Table.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/cis5550/generic/Worker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/cis5550/kvs/InMemoryTable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/cis5550/kvs/KVS.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/cis5550/kvs/KVSClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/cis5550/kvs/Master.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/cis5550/kvs/PersistentTable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/cis5550/kvs/Row.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/cis5550/kvs/Table.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/cis5550/kvs/Worker.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/cis5550/test/GenericTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/cis5550/test/HW4MasterTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/cis5550/test/HW4WorkerTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/cis5550/test/HW5Test.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/cis5550/tools/HTTP.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/cis5550/tools/Logger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.classpath" beforeDir="false" afterPath="$PROJECT_DIR$/app/.classpath" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/cis5550/kvs/KVSClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/cis5550/kvs/KVSClient.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,23 +50,10 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/wu000168/CIS 5550/project/kvs/app/src/main/java",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
-  }
-}]]></component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/src/main/java" />

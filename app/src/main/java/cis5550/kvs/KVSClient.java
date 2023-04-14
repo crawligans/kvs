@@ -23,6 +23,14 @@ public class KVSClient implements KVS {
     }
   };
 
+  public void drop(String tableID){
+    for (WorkerEntry w : workers) {
+      try {
+        byte[] response = HTTP.doRequest("PUT", "http://"+w.address+"/drop/"+tableID+"/", null).body();
+        String result = new String(response);
+      } catch (Exception e) {}
+    }
+  }
   Vector<WorkerEntry> workers;
   boolean haveWorkers;
 
