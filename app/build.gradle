@@ -31,11 +31,11 @@ dependencies {
 
 distributions {
     main {
-        distributionBaseName = 'KVS' + project.findProperty("kvs").toString()
+        distributionBaseName = 'KVS' + project.findProperty("kvs").toString() ?: ""
     }
 }
 
 application {
-    mainClass = 'cis5550.kvs.' + project.findProperty("kvs").toString()
-    archivesBaseName 'KVS' + project.findProperty("kvs").toString()
+    mainClass = 'cis5550.kvs.' + project.findProperty("kvs").toString() ?: ""
+    archivesBaseName 'KVS' + project.findProperty("kvs").toString() ?: ""
 }
