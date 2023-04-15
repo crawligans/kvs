@@ -182,7 +182,11 @@ public class Worker extends cis5550.generic.Worker {
     }
 
     private static void readTableLogs()  {
-        for(File f : new File(filePath).listFiles()){
+        File[] files = new File(filePath).listFiles();
+        if(files == null)
+            return;
+
+        for(File f : files){
             if(f.getName().endsWith(".table")){
                 try{
                     String tableName = f.getName().substring(0, f.getName().length() - 6);
@@ -203,8 +207,8 @@ public class Worker extends cis5550.generic.Worker {
     }
 
     private static void registerID(String[] args) {
-        File file = new File(args[1] + "/id");
         filePath = args[1];
+        File file = new File(filePath + "/id");
         try{
             if(file.exists() && file.isFile()){
                 System.out.println("File exists");  //debug
@@ -217,12 +221,13 @@ public class Worker extends cis5550.generic.Worker {
             else if(file.isDirectory()){
                 System.exit(1);
             }else{
-                System.out.println(file.getAbsolutePath());
+                //System.out.println(file.getAbsolutePath());
+                file.getParentFile().mkdirs();
                 file.createNewFile();
                 id = generateRandomString(5);
                 new FileWriter(file).write(id);
             }
-            System.out.println(id);
+            //System.out.println(id);
         }catch(Exception e){
             e.printStackTrace();
         }
