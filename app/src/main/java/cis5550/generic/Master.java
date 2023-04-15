@@ -38,6 +38,7 @@ public class Master {
         Server.get("/ping", (req, res) -> {
             String id = req.queryParams("id");
             String port = req.queryParams("port");
+            res.header("Content-Type", "text/plain");
             if (id == null || port == null) {
                 res.status(400, "Invalid request");
             }
