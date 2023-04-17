@@ -10,7 +10,7 @@ public class Master {
     private static ConcurrentHashMap<String, Pair<String, String> > activeWorkers = new ConcurrentHashMap<>();
 
     public static List<String> getWorkers(){
-        return new ArrayList<>();
+        return activeWorkers.keySet().stream().toList();
     }
     public static String workerTable(){
         String s = "<table>\n" +
