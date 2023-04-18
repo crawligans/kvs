@@ -1,8 +1,6 @@
 package cis5550.generic;
 
 import cis5550.webserver.Server;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -10,7 +8,8 @@ public class Master {
     private static ConcurrentHashMap<String, Pair<String, String> > activeWorkers = new ConcurrentHashMap<>();
 
     public static List<String> getWorkers(){
-        return activeWorkers.keySet().stream().toList();
+        return activeWorkers.values().stream().map(worker -> worker.first() + ":" + worker.second())
+            .toList();
     }
     public static String workerTable(){
         String s = "<table>\n" +
