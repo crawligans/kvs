@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class Worker extends cis5550.generic.Worker {
 
@@ -324,32 +325,12 @@ public class Worker extends cis5550.generic.Worker {
     }
     public static void addGetDefault(){
         Server.get("/", (request, response) -> {
-
-            String allTables = "<h1>Tables</h1>\n";
-            for (String id : tables.keySet()) {
-                // create table with all ids of tables
-                String s = "<table>\n" +
-                        "    <tr>\n" +
-                        "        <th>Table</th>\n" +
-                        "        <th>Row</th>\n" +
-                        "        <th>Column</th>\n" +
-                        "        <th>Value</th>\n" +
-                        "    </tr>\n";
-                Table table = tables.get(id);
-                for (String row : table.keySet()) {
-                    Row rowMap = table.getRow(row);
-                    for (String column : rowMap.columns()) {
-                        s += "    <tr>\n" +
-                                "        <td>" + id + "</td>\n" +
-                                "        <td>" + row + "</td>\n" +
-                                "        <td>" + column + "</td>\n" +
-                                "        <td>" + rowMap.get(column) + "</td>\n" +
-                                "    </tr>\n";
-                    }
-                }
-                allTables += s;
-            }
-
+            String allTables = """
+                    <h1>Tables</h1>
+                    <table>%s</table>
+                """.formatted(tables.keySet().stream().map(
+                k -> "<tr><td><a href=\"%s\">%s</a></td></tr>".formatted("/view/%s".formatted(k),
+                    k)).collect(Collectors.joining("\n")));
             return boilerPlate(allTables, null);
         });
     }
