@@ -20,7 +20,7 @@ public class Table {
         rows.put(row.key(), row);
     }
     public Row getRow(String row){
-        return rows.get(row);
+        return rows.computeIfAbsent(row, Row::new);
     }
 
     public String[] keySet() {

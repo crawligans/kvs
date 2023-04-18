@@ -219,7 +219,8 @@ public class KVSClient implements KVS, Serializable {
 
     for (WorkerEntry w : workers) {
       try {
-        byte[] response = HTTP.doRequest("PUT", "http://"+w.address+"/delete/"+java.net.URLEncoder.encode(oldTableName, "UTF-8")+"/", null).body();
+        byte[] response = HTTP.doRequest("PUT", "http://"+w.address+"/drop/"+java.net.URLEncoder.encode(oldTableName, "UTF-8")
+                                                + "/", null).body();
         String result = new String(response);
       } catch (Exception e) {}
     }
@@ -233,8 +234,8 @@ public class KVSClient implements KVS, Serializable {
       String target = "http://"+workers.elementAt(workerIndexForKey(row)).address+"/data/"+tableName+"/"+java.net.URLEncoder.encode(row, "UTF-8")+"/"+java.net.URLEncoder.encode(column, "UTF-8");
       byte[] response = HTTP.doRequest("PUT", target, value).body();
       String result = new String(response);
-      if (!result.equals("OK")) 
-      	throw new RuntimeException("PUT returned something other than OK: "+result+ "("+target+")");
+      if (!result.equals("OK"))
+        throw new RuntimeException("PUT returned something other than OK: "+result+ "("+target+")");
     } catch (UnsupportedEncodingException uee) {
       throw new RuntimeException("UTF-8 encoding not supported?!?");
     } 
@@ -321,21 +322,21 @@ public class KVSClient implements KVS, Serializable {
   }
 
   public static void main(String args[]) throws Exception {
-  	if (args.length < 2) {
+    if (args.length < 2) {
       System.err.println("Syntax: client <master> get <tableName> <row> <column>");
-  		System.err.println("Syntax: client <master> put <tableName> <row> <column> <value>");
+      System.err.println("Syntax: client <master> put <tableName> <row> <column> <value>");
       System.err.println("Syntax: client <master> scan <tableName>");
       System.err.println("Syntax: client <master> rename <oldTableName> <newTableName>");
       System.err.println("Syntax: client <master> persist <tableName>");
-  		System.exit(1);
-  	}
+      System.exit(1);
+    }
 
-  	KVSClient client = new KVSClient(args[0]);
+    KVSClient client = new KVSClient(args[0]);
     if (args[1].equals("put")) {
-    	if (args.length != 6) {
-	  		System.err.println("Syntax: client <master> put <tableName> <row> <column> <value>");
-	  		System.exit(1);
-    	}
+      if (args.length != 6) {
+        System.err.println("Syntax: client <master> put <tableName> <row> <column> <value>");
+        System.exit(1);
+      }
       client.put(args[2], args[3], args[4], args[5].getBytes("UTF-8"));
     } else if (args[1].equals("get")) {
       if (args.length != 5) {
@@ -369,8 +370,8 @@ public class KVSClient implements KVS, Serializable {
       }
       client.persist(args[2]);
     } else {
-    	System.err.println("Unknown command: "+args[1]);
-    	System.exit(1);
+      System.err.println("Unknown command: "+args[1]);
+      System.exit(1);
     }
   }
 };
