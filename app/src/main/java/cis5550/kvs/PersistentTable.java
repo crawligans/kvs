@@ -44,25 +44,27 @@ public class PersistentTable extends Table {
             throw new IllegalStateException();
         }
         try {
-            long seekVal = 0;
-            while (seekVal != file.length()) {
-                file.seek(seekVal);
-                String temp = file.readLine();
-                if (temp != null) {
-                    System.out.println(temp + " compare to " + row.key());
-                    if (temp.startsWith(row.key())) {
-                        file.seek(seekVal);
-                        break;
-                    }
-                }
-                seekVal += temp.length() + 1;
-            }
+            persistentRows.put(row.key(), file.length());
+            file.seek(file.length());
             file.write(row.toByteArray());
-            file.write("\n".getBytes());
-            persistentRows.put(row.key(), seekVal);
-        }catch(Exception e){
+            file.write('\n');
+        } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void putRow(Row row, long offset) {
+        if (unlinked) {
+            throw new IllegalStateException();
+        }
+        persistentRows.put(row.key(), offset);
+    }
+
+    public void putRow(String rowKey, long offset) {
+        if (unlinked) {
+            throw new IllegalStateException();
+        }
+        persistentRows.put(rowKey, offset);
     }
 
     @Override
