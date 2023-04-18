@@ -216,7 +216,7 @@ public class Worker extends cis5550.generic.Worker {
         File file = new File(filePath + "/id");
         try{
             if(file.exists() && file.isFile()){
-                System.out.println("File exists");  //debug
+                //System.out.println("File exists");  //debug
                 BufferedReader br = new BufferedReader(new FileReader(file));
                 String temp;
                 if((temp = br.readLine()) != null){
@@ -230,7 +230,9 @@ public class Worker extends cis5550.generic.Worker {
                 file.getParentFile().mkdirs();
                 file.createNewFile();
                 id = generateRandomString(5);
-                new FileWriter(file).write(id);
+                FileWriter fw = new FileWriter(file);
+                fw.write(id);
+                fw.close();
             }
             //System.out.println(id);
         }catch(Exception e){
