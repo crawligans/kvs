@@ -194,10 +194,14 @@ public class Worker extends cis5550.generic.Worker {
                     Table t = new PersistentTable(tableName, filePath);
                     FileInputStream fp = new FileInputStream(f);
                     while(true){
-                        Row r = Row.readFrom(fp);
-                        if(r == null)
-                            break;
-                        t.putRow(r);
+                        try {
+                            Row r = Row.readFrom(fp);
+                            if (r == null) {
+                                break;
+                            }
+                            t.putRow(r);
+                        } catch (Exception ignore) {
+                        }
                     }
                     tables.put(tableName, t);
                 }catch(Exception e){
