@@ -1,12 +1,19 @@
 package cis5550.kvs;
 
+import cis5550.tools.Logger;
 import cis5550.webserver.Server;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -15,7 +22,7 @@ public class Worker extends cis5550.generic.Worker {
 
     private static final ConcurrentHashMap< String, Table > tables = new ConcurrentHashMap< String , Table >();
     private static String filePath = null;
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         if(args.length != 3){
             System.out.println("Usage: java cis5550.generic.Worker <port> <storage-directory> <ip:port of master>");
             System.exit(1);
@@ -182,33 +189,41 @@ public class Worker extends cis5550.generic.Worker {
         });
     }
 
-    private static void readTableLogs()  {
-        File[] files = new File(filePath).listFiles();
-        if(files == null)
-            return;
-
-        for(File f : files){
-            if(f.getName().endsWith(".table")){
+    private static void readTableLogs() throws IOException {
+        Files.list(Path.of(filePath)).forEach(f -> {
+            String fileName = f.getFileName().toString();
+            if(fileName.endsWith(".table")){
                 try{
-                    String tableName = f.getName().substring(0, f.getName().length() - 6);
-                    Table t = new PersistentTable(tableName, filePath);
-                    FileInputStream fp = new FileInputStream(f);
-                    while(true){
-                        try {
-                            Row r = Row.readFrom(fp);
-                            if (r == null) {
+                    String tableName = fileName.substring(0, fileName.indexOf(".table"));
+                    PersistentTable t = new PersistentTable(tableName, filePath);
+                    RandomAccessFile file;
+                    try {
+                        file = new RandomAccessFile(f.toFile(), "rw");
+                    } catch (FileNotFoundException e) {
+                        throw new RuntimeException(e); // should not happen
+                    }
+                    try {
+                        long fp = 0;
+                        file.seek(fp);
+                        while ((fp = file.getFilePointer()) < file.length()) {
+                            Row row = Row.readFrom(file);
+                            if (row == null) {
                                 break;
                             }
-                            t.putRow(r);
-                        } catch (Exception ignore) {
+                            t.putRow(row.key(), fp);
                         }
+                    } catch (EOFException | AssertionError e) {
+                        // noop
+                    } catch (Exception e) {
+                        Logger.getLogger(Worker.class).error(e.getMessage(), e);
+                        throw new RuntimeException(e);
                     }
                     tables.put(tableName, t);
                 }catch(Exception e){
                     e.printStackTrace();
                 }
             }
-        }
+        });
     }
 
     private static void registerID(String[] args) {
