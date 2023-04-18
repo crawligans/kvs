@@ -5,7 +5,7 @@ import java.net.*;
 import java.io.*;
 import cis5550.tools.HTTP;
 
-public class KVSClient implements KVS {
+public class KVSClient implements KVS, Serializable {
 
   String master;
 

@@ -17,10 +17,10 @@ public class PersistentTable extends Table {
 
     public PersistentTable(String key, String fp) {
         super(key);
-        this.path = FILE_PATH + "/" + key + ".table";
         if (FILE_PATH == null) {
             FILE_PATH = fp;
         }
+        this.path = FILE_PATH + "/" + key + ".table";
         try {
             file = new RandomAccessFile(this.path, "rw");
             this.persistentRows = new ConcurrentHashMap<String, Long>();
