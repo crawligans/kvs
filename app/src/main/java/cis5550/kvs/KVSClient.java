@@ -9,7 +9,7 @@ public class KVSClient implements KVS, Serializable {
 
   String master;
 
-  static class WorkerEntry implements Comparable<WorkerEntry> {
+  static class WorkerEntry implements Comparable<WorkerEntry>, Serializable {
     String address;
     String id;
 
