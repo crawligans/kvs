@@ -29,7 +29,7 @@ public class PersistentTable extends Table {
         }
     }
 
-    public Collection<Row> drop() throws IOException {
+    public synchronized Collection<Row> drop() throws IOException {
         unlinked = true;
         Collection<Row> rows = values();
         file.close();
@@ -39,7 +39,7 @@ public class PersistentTable extends Table {
     }
 
     @Override
-    public void putRow(Row row) {
+    public synchronized void putRow(Row row) {
         if (unlinked) {
             throw new IllegalStateException();
         }
@@ -68,7 +68,7 @@ public class PersistentTable extends Table {
     }
 
     @Override
-    public Row getRow(String rowID) {
+    public synchronized Row getRow(String rowID) {
         if (unlinked) {
             throw new IllegalStateException();
         }
@@ -95,7 +95,7 @@ public class PersistentTable extends Table {
     }
 
     @Override
-    public void rename(String newTableID) {
+    public synchronized void rename(String newTableID) {
         if (unlinked) {
             throw new IllegalStateException();
         }
