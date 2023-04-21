@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.EOFException;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -382,14 +381,15 @@ public class Worker extends cis5550.generic.Worker {
                 sb.append("<tr>");
                 sb.append("<td>").append((row).key()).append("</td>");
                 for (String column : columns) {
-                    sb.append("<td>").append((row).get(column)).append("</td>");
+                    sb.append("<td>").append(escapeHtml(row.get(column))).append("</td>");
                 }
                 sb.append("</tr>");
             }
             sb.append("</table>");
 
-            if (page * 10 < tableMap.size()){
-                sb.append("<a href=/view/").append(table).append("?page=").append(page + 1).append(">Next</a>");
+            if (page * 10 < tableMap.size()) {
+                sb.append("<a href=/view/").append(table).append("?page=").append(page + 1)
+                    .append(">Next</a>");
             }
             String fullHTML = boilerPlate(sb.toString(), table);
             response.type("text/html");
@@ -398,14 +398,19 @@ public class Worker extends cis5550.generic.Worker {
 
     }
 
-    public static void addPersist(){
+    public static String escapeHtml(String html) {
+        return html.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("&", "&amp;")
+            .replaceAll(" ", "&nbsp;");
+    }
+
+    public static void addPersist() {
         Server.put("/persist/:X", (request, response) -> {
             String table = request.params("X");
-            if((new File(filePath + "/" + table + ".table")).exists()){
+            if ((new File(filePath + "/" + table + ".table")).exists()) {
                 response.status(403, "Bad Request");
                 return "FAIL";
-            }else{
-                tables.put(table , (new PersistentTable(table, filePath)));
+            } else {
+                tables.put(table, (new PersistentTable(table, filePath)));
             }
             return "OK";
         });
