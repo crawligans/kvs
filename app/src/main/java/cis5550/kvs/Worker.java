@@ -370,27 +370,31 @@ public class Worker extends cis5550.generic.Worker {
             StringBuilder sb = new StringBuilder();
 
 
-            sb.append("<table>");
+            sb.append("<!DOCTYPE html><html><head><title>Table ").append(table).append("</title></head>");
+            sb.append("<body><table border=\"1\">");
+            // column names
             sb.append("<tr><th>row key</th>");
             for (String column : columns) {
                 sb.append("<th>").append(column).append("</th>");
             }
             sb.append("</tr>");
             // rows
-            for (Row row : rows) {
+            for (Object row : rows) {
                 sb.append("<tr>");
-                sb.append("<td>").append((row).key()).append("</td>");
+                sb.append("<td>").append(((Row) row).key()).append("</td>");
                 for (String column : columns) {
                     sb.append("<td>").append(escapeHtml(row.get(column))).append("</td>");
                 }
                 sb.append("</tr>");
             }
             sb.append("</table>");
+            // next link
 
             if (page * 10 < tableMap.size()) {
                 sb.append("<a href=/view/").append(table).append("?page=").append(page + 1)
                     .append(">Next</a>");
             }
+            sb.append("</body></html>");
             String fullHTML = boilerPlate(sb.toString(), table);
             response.type("text/html");
             return fullHTML;
@@ -436,14 +440,5 @@ public class Worker extends cis5550.generic.Worker {
             return null;
         });
     }
-
-    /*
-    Now add support for logging. Since each persistent table needs its own log, you’ll need to store a mapping from (persistent) tables to some object that wraps the log – perhaps a RandomAccessFile (since we’ll need to get rows from random file positions later on).
-    Don’t worry about reading the logs for now; just open a new log when a persistent table is first created, and append a new entry as specified whenever something is added or changed. If you followed our recommendations on the HW4 handout,
-    you should already have a putRow helper function; you can just add a write there if the table is persistent.
-    Notice that the Row object already contains a toByteArray() method for serialization; all you need to do is add the final LF.
-    To test, use KVSClient’s persist command to create a persistent table, then use the put command to generate some load; be sure to both insert new rows
-and to change existing ones. You should see a new line appear in the relevant .table file for each addition or change. Also, the persist test case should now work.
-     */
 
 }
