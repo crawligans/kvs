@@ -5,14 +5,16 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 public class PersistentTable extends Table {
 
     private RandomAccessFile file;
     private static String FILE_PATH = null;
     private final String path;
-    private ConcurrentHashMap<String, Long> persistentRows; //key, seekVal
+    private Map<String, Long> persistentRows; //key, seekVal
     private boolean unlinked = false;
 
     public PersistentTable(String key, String fp) {
@@ -23,7 +25,7 @@ public class PersistentTable extends Table {
         this.path = FILE_PATH + "/" + key + ".table";
         try {
             file = new RandomAccessFile(this.path, "rw");
-            this.persistentRows = new ConcurrentHashMap<String, Long>();
+            this.persistentRows = new ConcurrentSkipListMap<>();
         } catch (Exception e) {
             e.printStackTrace();
         }

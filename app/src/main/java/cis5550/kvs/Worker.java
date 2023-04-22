@@ -363,7 +363,7 @@ public class Worker extends cis5550.generic.Worker {
             Table tableMap = tables.get(table);
             int page = request.queryParams("page") == null ? 1 : Integer.parseInt(request.queryParams("page"));
 
-            Row[] rows = tableMap.values().stream().sorted().skip((page - 1) * 10L).limit(10).toArray(Row[]::new);
+            Row[] rows = tableMap.values().stream().skip((page - 1) * 10L).limit(10).toArray(Row[]::new);
             String[] columns = Arrays.stream(rows).flatMap(row -> row.columns().stream()).
                     distinct().sorted().limit(10).toArray(String[]::new);
 
@@ -379,9 +379,9 @@ public class Worker extends cis5550.generic.Worker {
             }
             sb.append("</tr>");
             // rows
-            for (Object row : rows) {
+            for (Row row : rows) {
                 sb.append("<tr>");
-                sb.append("<td>").append(((Row) row).key()).append("</td>");
+                sb.append("<td>").append(row.key()).append("</td>");
                 for (String column : columns) {
                     sb.append("<td>").append(escapeHtml(row.get(column))).append("</td>");
                 }
