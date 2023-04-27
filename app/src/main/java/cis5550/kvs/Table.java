@@ -1,30 +1,36 @@
 package cis5550.kvs;
 
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 public class Table {
+
     protected String id;
-    protected ConcurrentHashMap<String, Row> rows;
-    public Table(String id){
+    protected Map<String, Row> rows;
+
+    public Table(String id) {
         this.id = id;
-        this.rows = new ConcurrentHashMap<String, Row>();
+        this.rows = new ConcurrentSkipListMap<>();
     }
-    ConcurrentHashMap<String, Row > getTable(){
+
+    Map<String, Row> getTable() {
         return rows;
     }
 
     public boolean containsKey(String row) {
         return rows.containsKey(row);
     }
+
     public void putRow(Row row) {
         rows.put(row.key(), row);
     }
-    public Row getRow(String row){
+
+    public Row getRow(String row) {
         return rows.computeIfAbsent(row, Row::new);
     }
 
     public String[] keySet() {
-        return rows.keySet().toArray(new String[rows.size()]);
+        return rows.keySet().toArray(String[]::new);
     }
 
     public void rename(String newTableID) {

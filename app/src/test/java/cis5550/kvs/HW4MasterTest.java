@@ -1,4 +1,4 @@
-package cis5550.test;
+package cis5550.kvs;
 
 import java.io.PrintWriter;
 import java.net.Socket;
