@@ -14,7 +14,6 @@ import java.io.RandomAccessFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -404,8 +403,10 @@ public class Worker extends cis5550.generic.Worker {
     }
 
     public static String escapeHtml(String html) {
-        return html.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("&", "&amp;")
-            .replaceAll(" ", "&nbsp;");
+        if (html == null) {
+            return null;
+        }
+        return html.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("&", "&amp;");
     }
 
     public static void addPersist() {
