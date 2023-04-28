@@ -14,6 +14,7 @@ import java.io.RandomAccessFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -379,11 +380,11 @@ public class Worker extends cis5550.generic.Worker {
             }
             sb.append("</tr>");
             // rows
-            for (Row row : rows) {
+            for (Object row : rows) {
                 sb.append("<tr>");
-                sb.append("<td>").append(row.key()).append("</td>");
+                sb.append("<td>").append(((Row) row).key()).append("</td>");
                 for (String column : columns) {
-                    sb.append("<td>").append(escapeHtml(row.get(column))).append("</td>");
+                    sb.append("<td>").append(escapeHtml(((Row) row).get(column))).append("</td>");
                 }
                 sb.append("</tr>");
             }
