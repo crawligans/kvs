@@ -404,8 +404,13 @@ public class Worker extends cis5550.generic.Worker {
     }
 
     public static String escapeHtml(String html) {
-        return html.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("&", "&amp;")
-            .replaceAll(" ", "&nbsp;");
+        if (html == null) {
+            return null;
+        }
+        return html.replaceAll("<", "&lt;").
+                    replaceAll(">", "&gt;").
+                    replaceAll("&", "&amp;").
+                    replaceAll(" ", "&nbsp;");
     }
 
     public static void addPersist() {
