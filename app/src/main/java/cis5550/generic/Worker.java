@@ -1,7 +1,9 @@
 package cis5550.generic;
 
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Random;
+
 /*
 * Your cis5550.kvs.Worker should accept three command-line arguments:
 *  1) a port number for the worker,
@@ -30,21 +32,25 @@ public class Worker {
                 try {
                     Thread.sleep(5000);
                     final int SHORT_ID_LENGTH = 5;
-                    if(id == null){
+                    if (id == null) {
                         id = generateRandomString(SHORT_ID_LENGTH);
                     }
-                    try{
-                        URL url = new URL("http://" + args[2] + "/ping?id=" + id + "&port=" + args[0]);
-                        url.getContent();
-                    }catch(Exception e){
-                        e.printStackTrace();
-                    }
-
-                } catch (InterruptedException e) {
+                    URL url = new URL(
+                        "http://" + args[2] + "/ping?id=" + id + "&port=" + args[0]);
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setConnectTimeout(500);
+                    connection.connect();
+                    connection.getContent();
+                    connection.disconnect();
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        }) {{
+            setDaemon(true);
+            setPriority(10);
+            start();
+        }};
     }
 
     protected static String generateRandomString(int short_id_length) {

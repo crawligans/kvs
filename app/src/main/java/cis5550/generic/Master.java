@@ -40,14 +40,11 @@ public class Master {
             res.header("Content-Type", "text/plain");
             if (id == null || port == null) {
                 res.status(400, "Invalid request");
+                return "400 Invalid request";
             }
             String ip = req.ip();
             System.out.println("Received ping from worker " + id + " at " + ip + ":" + port);
-            if (!activeWorkers.containsKey(id)) {
-                activeWorkers.put(id, new Pair<>(ip, port));
-            } else {
-                activeWorkers.replace(id, new Pair<>(ip, port));
-            }
+            activeWorkers.put(id, new Pair<>(ip, port));
             return "OK";
         });
         Server.get("/workers", (req, res) -> {
