@@ -416,12 +416,7 @@ public class Worker extends cis5550.generic.Worker {
     public static void addPersist() {
         Server.put("/persist/:X", (request, response) -> {
             String table = request.params("X");
-            if ((new File(filePath + "/" + table + ".table")).exists()) {
-                response.status(403, "Bad Request");
-                return "FAIL";
-            } else {
-                tables.put(table, (new PersistentTable(table, filePath)));
-            }
+            tables.putIfAbsent(table, (new PersistentTable(table, filePath)));
             return "OK";
         });
     }
