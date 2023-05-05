@@ -63,21 +63,11 @@ public class Worker extends cis5550.generic.Worker {
                 res.status(304, "Not Modified");
                 return "Use \"isPersist=true\" in query param to confirm delete an persistent table";
             }
-            tables.remove(tableID).getTable().forEach((key, value) -> {
-                try {
-                    res.write(key.getBytes());
-                    res.write("\t".getBytes());
-                    res.write(value.toByteArray());
-                    res.write("\r\n".getBytes());
-                } catch (Exception ex) {
-                    throw new RuntimeException(ex);
-                }
-            });
-            res.write("\r\n".getBytes());
+            tables.remove(tableID);
             if (table instanceof PersistentTable) {
                 ((PersistentTable) table).drop();
             }
-            return table.size();
+            return String.valueOf(table.size());
         });
     }
 
@@ -94,7 +84,8 @@ public class Worker extends cis5550.generic.Worker {
             }
             res.type("text/plain");
             Table table = tables.get(tableID);
-            return table.size();
+            res.status(200, "OK");
+            return String.valueOf(table.size());
         });
     }
 

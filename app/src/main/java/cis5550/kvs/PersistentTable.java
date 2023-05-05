@@ -1,5 +1,6 @@
 package cis5550.kvs;
 
+import cis5550.tools.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -9,6 +10,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 public class PersistentTable extends Table {
+    private static Logger logger = Logger.getLogger(PersistentTable.class);
 
     private RandomAccessFile file;
     private static String FILE_PATH = null;
@@ -80,7 +82,7 @@ public class PersistentTable extends Table {
         try {
             file.seek(seekVal);
             Row r = Row.readFrom(file);
-            System.out.println("Row ID: " + rowID + "Size: " + r.columns().size());
+            logger.debug("Row ID: " + rowID + " Size: " + (r != null ? r.columns().size() : 0));
             return r;
         } catch (Exception e) {
             e.printStackTrace();
