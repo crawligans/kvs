@@ -366,7 +366,7 @@ public class Worker extends cis5550.generic.Worker {
 
             Row[] rows = tableMap.values().stream().skip((page - 1) * 10L).limit(10).toArray(Row[]::new);
             String[] columns = Arrays.stream(rows).flatMap(row -> row.columns().stream()).
-                    distinct().sorted().limit(10).toArray(String[]::new);
+                    distinct().sorted().limit(100).toArray(String[]::new);
 
             StringBuilder sb = new StringBuilder();
 

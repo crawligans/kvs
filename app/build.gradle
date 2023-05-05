@@ -32,5 +32,5 @@ distributions {
 
 application {
     mainClass = 'cis5550.kvs.' + project.findProperty("kvs").toString() ?: ""
-    archivesBaseName 'KVS' + project.findProperty("kvs").toString() ?: ""
+    archivesBaseName = 'KVS' + project.findProperty("kvs").toString() ?: ""
 }
