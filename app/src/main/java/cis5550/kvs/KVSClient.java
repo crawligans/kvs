@@ -1,9 +1,17 @@
 package cis5550.kvs;
 
-import java.util.*;
-import java.net.*;
-import java.io.*;
 import cis5550.tools.HTTP;
+import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Vector;
 
 public class KVSClient implements KVS, Serializable {
 
@@ -328,6 +336,7 @@ public class KVSClient implements KVS, Serializable {
       System.err.println("Syntax: client <master> scan <tableName>");
       System.err.println("Syntax: client <master> rename <oldTableName> <newTableName>");
       System.err.println("Syntax: client <master> persist <tableName>");
+      System.err.println("Syntax: count <master> count <tableName>");
       System.exit(1);
     }
 
@@ -365,12 +374,18 @@ public class KVSClient implements KVS, Serializable {
       client.rename(args[2], args[3]);
     } else if (args[1].equals("persist")) {
       if (args.length != 3) {
-        System.err.println("Syntax: persist <master> persist <tableName>");
+        System.err.println("Syntax: client <master> persist <tableName>");
         System.exit(1);
       }
       client.persist(args[2]);
+    } else if (args[1].equals("count")) {
+      if (args.length != 3) {
+        System.err.println("Syntax: client <master> count <tableName>");
+        System.exit(1);
+      }
+      System.out.println(client.count(args[2]));
     } else {
-      System.err.println("Unknown command: "+args[1]);
+      System.err.println("Unknown command: " + args[1]);
       System.exit(1);
     }
   }

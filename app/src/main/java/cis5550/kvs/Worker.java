@@ -269,7 +269,7 @@ public class Worker extends cis5550.generic.Worker {
                 tableMap.putRow(new Row(row));
             }
             Row rowMap = tableMap.getRow(row);
-            System.out.println(rowMap.toString());
+//            System.out.println(rowMap.toString());
             rowMap.put(column, body);
             tableMap.putRow(rowMap);
 
